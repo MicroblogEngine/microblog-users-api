@@ -1,4 +1,4 @@
-import { fakeUsers } from "@/app/db/users";
+import { fakeUsers } from "@/src/app/db/users";
 import { NextResponse } from "next/server";
 
 export async function GET() {
