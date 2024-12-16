@@ -18,7 +18,7 @@ RUN corepack enable
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --no-frozen-lockfile
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --no-frozen-lockfile
-RUN cd "${SOURCE_DIR}" && pnpm run build
+RUN ls -la
 
 FROM builder AS test
 
