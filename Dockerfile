@@ -1,24 +1,24 @@
 # syntax=docker/dockerfile:1
 ARG NODE_VERSION=23.4
-ARG DEBIAN_CODENAME=slim
+ARG CODENAME=alpine
 
 ARG SOURCE_DIR=/home/jenkins
 
-FROM node:${NODE_VERSION}-${DEBIAN_CODENAME} AS base
+FROM node:${NODE_VERSION}-${CODENAME} AS base
 
 FROM base AS builder
 
 ARG SOURCE_DIR
 
+RUN apk add --no-cache libc6-compat
 WORKDIR "$SOURCE_DIR"
 
 ENV NODE_ENV production
 
-RUN corepack enable
 COPY . .
-RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --no-frozen-lockfile
-RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --no-frozen-lockfile
-RUN ls -la
+RUN corepack enable pnpm && \
+  pnpm install --no-frozen-lockfile && \
+  pnpm run build
 
 FROM builder AS test
 
