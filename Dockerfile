@@ -6,7 +6,7 @@ ARG SOURCE_DIR=/home/jenkins
 
 FROM node:${NODE_VERSION}-${DEBIAN_CODENAME} AS base
 
-FROM base as builder
+FROM base AS builder
 
 ARG SOURCE_DIR
 
