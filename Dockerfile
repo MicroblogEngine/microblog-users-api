@@ -16,9 +16,9 @@ WORKDIR "$SOURCE_DIR"
 ENV NODE_ENV production
 
 COPY . .
-RUN corepack enable pnpm && \
-  pnpm install --no-frozen-lockfile && \
-  pnpm run build
+RUN yarn cache clean && \
+  yarn install && \
+  yarn run build
 
 FROM builder AS test
 
