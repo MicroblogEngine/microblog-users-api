@@ -8,6 +8,5 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    nodePort: 9101
   selector:
     env: sandbox
