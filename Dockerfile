@@ -4,21 +4,21 @@ ARG DEBIAN_CODENAME=slim
 
 ARG SOURCE_DIR=/home/jenkins
 
-FROM node:${NODE_VERSION}-${DEBIAN_CODENAME} AS builder
+FROM node:${NODE_VERSION}-${DEBIAN_CODENAME} AS base
+
+FROM base as builder
 
 ARG SOURCE_DIR
 
 WORKDIR "$SOURCE_DIR"
 
+ENV NODE_ENV production
+
 RUN corepack enable
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --no-frozen-lockfile
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --no-frozen-lockfile
-RUN rm  -rf dist  && \
-  rm -rf release  && \ 
-  mkdir release  && \
-  pnpm build && \
-  tar czvf release/app.tar.gz -C dist/ .
+RUN pnpm run build
 
 FROM builder AS test
 
@@ -26,19 +26,28 @@ ARG SOURCE_DIR
 
 WORKDIR "$SOURCE_DIR"
 
-RUN npm run test
+RUN pnpm run test
 
-FROM nginx:stable AS runtime
+FROM base AS runtime
 SHELL [ "/bin/bash", "-euo", "pipefail", "-c" ]
 
 ARG SOURCE_DIR
-COPY --from=builder --chown=0 --link [ "${SOURCE_DIR}/release/app.tar.gz",  "/app.tar.gz" ]
 
-RUN mkdir /app
+ENV NODE_ENV production
 
-RUN cp /app.tar.gz /usr/share/nginx/html && \
-  cd /usr/share/nginx/html && \
-  tar xzvf app.tar.gz && \
-  rm app.tar.gz && \
-  chown -R nginx:nginx .
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder ["${SOURCE_DIR}/public", "./public"]
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/.next/standalone", "./"]
+COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/.next/static", "./.next/static"]
+
+CMD ["node", "server.js"]
 
