@@ -16,9 +16,9 @@ WORKDIR "$SOURCE_DIR"
 ENV NODE_ENV production
 
 COPY . .
-RUN yarn cache clean && \
-  yarn install && \
-  yarn run build
+RUN corepack enable pnpm && \
+  pnpm install --no-frozen-lockfile && \
+  pnpm run build
 
 FROM builder AS test
 
@@ -29,7 +29,6 @@ WORKDIR "$SOURCE_DIR"
 RUN pnpm run test
 
 FROM base AS runtime
-SHELL [ "/bin/bash", "-euo", "pipefail", "-c" ]
 
 ARG SOURCE_DIR
 
