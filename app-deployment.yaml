@@ -18,4 +18,4 @@ spec:
       - name: microblog-feed-api-container
         image: registry.local:5000/training/microblog-feed-api:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
