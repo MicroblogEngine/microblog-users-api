@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: microblog-feed-api-svc
+  name: microblog-users-api-svc
   labels:
-    app: microblog-feed-api
+    app: microblog-users-api
 spec:
   type: LoadBalancer
   ports:

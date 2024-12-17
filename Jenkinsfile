@@ -2,7 +2,7 @@
 pipeline {
     agent any
     environment {
-        BASE_IMAGE = "training/microblog-feed-api" 
+        BASE_IMAGE = "training/microblog-users-api" 
     }        
     stages {
         stage('Lint') {
@@ -48,7 +48,7 @@ pipeline {
                     sh 'chmod u+x ./kubectl'                      
                     sh "./kubectl apply -f app-service.yaml -n default"
                     sh "./kubectl apply -f app-deployment.yaml -n default"
-                    sh "./kubectl rollout restart deployment/microblog-feed-api-deployment"
+                    sh "./kubectl rollout restart deployment/microblog-users-api-deployment"
                 }
             }
         }        

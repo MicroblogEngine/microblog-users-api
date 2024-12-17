@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: microblog-feed-api-deployment
+  name: microblog-users-api-deployment
   labels:
     env: sandbox
 spec:
@@ -15,7 +15,7 @@ spec:
         env: sandbox
     spec:
       containers:
-      - name: microblog-feed-api-container
-        image: registry.local:5000/training/microblog-feed-api:latest
+      - name: microblog-users-api-container
+        image: registry.local:5000/training/microblog-users-api:latest
         ports:
         - containerPort: 3000
