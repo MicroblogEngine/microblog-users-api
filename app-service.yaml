@@ -10,4 +10,4 @@ spec:
   - port: 81
     targetPort: 3000
   selector:
-    env: sandbox
+    app: microblog-users-api
