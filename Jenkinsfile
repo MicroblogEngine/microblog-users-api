@@ -5,6 +5,6 @@ String dockerRepository = "training/microblog-users-api"
 String dockerRegistry = "registry.local:5000"
 dockerPipeline([
     dockerRepository: dockerRepository,
-    dockerRegistru: dockerRegistry,
+    dockerRegistry: dockerRegistry,
     platform: "linux/amd64"
 ])
