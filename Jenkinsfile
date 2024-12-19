@@ -1,4 +1,4 @@
-@Library('jenkins-pipeline-library@0.0.1')
+@Library('jenkins-pipeline-library@main')
 
 //project CI/CD pipeline config
 String dockerRepository = "training/microblog-users-api"
