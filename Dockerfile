@@ -1,24 +1,26 @@
 # syntax=docker/dockerfile:1
-ARG NODE_VERSION=23.4
-ARG CODENAME=alpine
+ARG NODE_VERSION=23-bookworm
+ARG DEBIAN_CODENAME=slim
 
 ARG SOURCE_DIR=/home/jenkins
 
-FROM node:${NODE_VERSION}-${CODENAME} AS base
+FROM node:${NODE_VERSION}-${DEBIAN_CODENAME} AS base
 
 FROM base AS builder
 
 ARG SOURCE_DIR
 
-RUN apk add --no-cache libc6-compat
 WORKDIR "$SOURCE_DIR"
 
 ENV NODE_ENV production
 
+RUN corepack enable && \
+  apt-get update -y && \
+  apt-get install -y openssl
 COPY . .
-RUN corepack enable pnpm && \
-  pnpm install --no-frozen-lockfile && \
-  pnpm run build
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --no-frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --no-frozen-lockfile
+RUN pnpm run build
 
 FROM builder AS test
 
@@ -33,6 +35,9 @@ FROM base AS runtime
 ARG SOURCE_DIR
 
 ENV NODE_ENV production
+
+RUN apt-get update -y && \
+  apt-get install -y openssl
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

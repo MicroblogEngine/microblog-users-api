@@ -1,4 +1,4 @@
-import { fakeUsers } from "@/db/users";
+import { fakeUsers } from "@/models/users";
 import { NextResponse } from "next/server";
 
 export async function GET() {
