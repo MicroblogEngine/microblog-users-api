@@ -4,7 +4,7 @@ import path from "path";
 const nextConfig: NextConfig = {
   output: 'standalone',
   webpack: (config, {}) => {
-    config.resolve.alias['@/'] = path.join(__dirname, 'src', 'app');
+    config.resolve.alias['@'] = path.join(__dirname, 'src', 'app');
     return config;
   },
 };
