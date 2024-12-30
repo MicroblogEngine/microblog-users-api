@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 // the list of all allowed origins
 const allowedOrigins = [
+  'http://appmicroblogararog.loclx.io', 
   'http://app.microblog.training', 
   'http://microblog-prometheus.default.svc.cluster.local', 
 ];
 
-export function middleware(req:NextRequest) {
+export function corsMiddleware(req:NextRequest) {
     // retrieve the current response
     const res = NextResponse.next()
 
