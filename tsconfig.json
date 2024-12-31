@@ -22,7 +22,6 @@
       "@/*": [ "./src/app/*" ], 
       "@/api/*": [ "./src/app/api/*" ],
       "@/helpers/*": [ "./src/app/helpers/*" ],
-      "@/middlewares/*": [ "./src/app/middlewares/*" ],
       "@/models/*": [ "./src/app/models/*" ]
     }
   },
