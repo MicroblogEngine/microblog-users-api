@@ -54,8 +54,7 @@ export async function middleware(req:NextRequest) {
           return new NextResponse(null, { status: 401 });
       }
     }
-    catch(e){
-      console.log(e);
+    catch{
       return new NextResponse(null, { status: 401 });
     }    
   }
