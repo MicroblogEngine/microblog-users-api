@@ -1,5 +1,6 @@
 import { validPassword } from "@/helpers/password";
 import { prisma } from "@/helpers/prisma";
+import { LoginResponse } from "@/models/users";
 import * as jose from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     const user = await prisma.user.findFirst({ 
       where: {
-        email: cred.email 
+        username: cred.username 
       }
     });
 
@@ -24,8 +25,17 @@ export async function POST(req: NextRequest) {
           .setExpirationTime('2w')
           .sign(new TextEncoder().encode(secret))        
     
-        return new NextResponse(JSON.stringify({token}), {
+        const response: LoginResponse = {
+          user: user,
+          token
+        };
+
+        return new NextResponse(JSON.stringify(response), {
             status: 200,
+        });  
+      } else {
+        return new NextResponse(null, {
+          status: 401,
         });  
       }
     }

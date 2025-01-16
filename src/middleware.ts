@@ -1,20 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from 'jose'
 
-const ignoredRoutes = [
-  '/api/users/health',
-  '/api/users/metrics',
-]
+// const ignoredRoutes = [
+//   '/api/users/health',
+//   '/api/users/metrics',
+// ]
 
+/*
 const allowedOrigins = [
   'https://appmicroblogararog.loclx.io', 
   'https://app.microblog.training', 
   'http://microblog-prometheus.default.svc.cluster.local', 
 ];
+*/
 
 export async function middleware(req:NextRequest) {
   const res = NextResponse.next();
 
+  /*
   const origin = req.headers.get("origin");
   if (! origin)
     return res;
@@ -32,8 +35,11 @@ export async function middleware(req:NextRequest) {
       'Access-Control-Allow-Headers',
       'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   )
+  */
 
-  if(! ignoredRoutes.includes(req.url)) {
+  if(! req.url.includes('/health') && 
+    ! req.url.includes('/metrics') && 
+    ! req.url.includes('/auth')) {
     const authorization = req.headers.get('authorization');
     if(!authorization)
       return new NextResponse(null, { status: 401 });
