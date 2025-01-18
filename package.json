@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
     "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
+    "@opentelemetry/api-logs": "^0.57.1",
+    "@opentelemetry/instrumentation": "^0.57.1",
+    "@opentelemetry/sdk-logs": "^0.57.1",
     "@prisma/client": "6.1.0",
+    "@vercel/otel": "^1.10.0",
     "jose": "^5.9.6",
     "next": "15.1.0",
     "next-auth": "5.0.0-beta.25",
