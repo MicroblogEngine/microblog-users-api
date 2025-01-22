@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@ararog/microblog-next": "^0.0.3",
     "@auth/prisma-adapter": "^2.7.4",
     "@opentelemetry/api-logs": "^0.57.1",
     "@opentelemetry/instrumentation": "^0.57.1",
