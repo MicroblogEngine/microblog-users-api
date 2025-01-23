@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 import { prisma } from "@/helpers/prisma";
-import { VerifyPasswordFormSchema } from "@ararog/microblog-validation";
+import { CheckResetPasswordTokenSchema } from "@ararog/microblog-validation";
 
-export async function POST(req: NextRequest) {
-
-  const verificationPayload = await req.json();
+export const POST = async (req: NextRequest) => {
+  const { token, email } = await req.json();
 
   try {
-    VerifyPasswordFormSchema.parse(verificationPayload);
+    CheckResetPasswordTokenSchema.parse({ token, email });
   }
   catch(e) {
     if (e instanceof ZodError) {
@@ -19,24 +18,30 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email
+    }
+  });
+
   const verification_token = await prisma.verificationToken.findFirst({ 
     where: {
-      userId: verificationPayload.userId,
-      token: verificationPayload.token
+      userId: user?.id,
+      token: token
     }
   });
 
   if(!verification_token) {
-    return new NextResponse(JSON.stringify({ errors: { token: ["Token not found"] } }), {
+    return new NextResponse(JSON.stringify({ errors: { email: ["Token not found"] } }), {
       status: 401,
     });
   }
 
   if (verification_token.expires && verification_token.expires < new Date()) {
-    return new NextResponse(JSON.stringify({ errors: { token: ["Token Expired"] } }), {
+    return new NextResponse(JSON.stringify({ errors: { email: ["Token Expired"] } }), {
       status: 401,
     });
-  }
+  }  
 
   return new NextResponse(null, {
     status: 200,

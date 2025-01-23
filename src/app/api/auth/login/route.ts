@@ -1,16 +1,29 @@
 import { validPassword } from "@/helpers/password";
 import { prisma } from "@/helpers/prisma";
 import { LoginResponse } from "@/models/users";
+import { LoginFormSchema } from "@ararog/microblog-validation";
 import * as jose from "jose";
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 export async function POST(req: NextRequest) {
 
-  const cred = await req.json();
+  const credentialsPayload = await req.json();
+
+  try {
+    LoginFormSchema.parse(credentialsPayload);
+  }
+  catch(e) {
+    if (e instanceof ZodError) {
+      return new NextResponse(JSON.stringify({ errors: e.formErrors.fieldErrors }), {
+        status: 400,
+      });  
+    }
+  }
 
   const user = await prisma.user.findFirst({ 
     where: {
-      username: cred.username 
+      username: credentialsPayload.username 
     }
   });
 
@@ -21,7 +34,7 @@ export async function POST(req: NextRequest) {
     });  
   }
 
-  const isValidPassword = validPassword(cred.password, 
+  const isValidPassword = validPassword(credentialsPayload.password, 
     user.hash, user.salt);
     
   if(!isValidPassword) {

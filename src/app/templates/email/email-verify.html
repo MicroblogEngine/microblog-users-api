@@ -1,0 +1,60 @@
+<html>
+<head>
+    <title>{{title}}</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .message-box {
+            background-color: black;
+            border: 1px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        .token {
+            font-family: monospace;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin: 20px 0;
+        }
+        .logo-box {
+
+        }
+        .disclaimer {
+            color: #888;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+  <table align="center">
+    <tr>
+      <td>
+        <img style="display: inline-block;" width="64" height="64" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAASFBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////neHiwAAAAF3RSTlMABAUqKzBAd3iAgoeIlcDJytDk5ej4+misSXEAAAABYktHRBcL1piPAAAB5klEQVR42u3bDVLCMBBA4VCxkiKIYuX+N7UwoxboT5JmdzP4vgO0ebuA1BmcAwAAAAAAAAAAAAAAAAAAAACIqP228Qaara+zhviTGU/IeMhxp/my2h1lQj66i369VlrvytVL293wUyCkuVz5/Vmn4+ntMrdGIMT/XLzSWkc3NC8S8nd9nXVUTirEqSylPy6xEIWlXM1KLkR6KTeDkgwRXcrtlERD5JZyPyLhEKGlDMxHOkRiKYPDkQ/JvpThySiE5F3K2FhUQjIuZXQmOiG5ljIxEK2QLEuZmoZayPKlTI9CMWThUmbm0L/v0HNwzpAlS5kdgm5I8lLmJ6D50kpeSki+ekjCUoLa9UNilxIYbhEStZTQapOQ8OOFJxuFBJ4w4kVoFRJyyKiPBbuQ2XPGfSYYhkwfNfZT2jRk4rTRfzdtQ8YOnPBNxjpk8MwpX2PMQ+6PnfbFsoCQm5MnftUvIaR/+OSHrzJCfs+f/uRVSIhz60OX0J5zDmvN++a/4Gpzrji1m9Xi+yo86s6+U5L/X1RSSLeUxHUU9dIq7b6EEEIIIYQQQgghhBBCCCH/OcT8UZcQ3iOEEEIIIYQQQgghhBBCyIOF7C1+z77nZ+CPHlJ7M7UDAAAAAAAAAAAAAAAAAAAAAIj4Bj6/kzD2n6IUAAAAAElFTkSuQmCC" />
+      </td>
+      <td>
+        <h1 style="display: inline-block;">Microblog</h1>
+      </td>
+    </tr>
+  </table>
+
+  <h2>{{title}}</h2>
+  
+  <img width="48" height="48" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAADEklEQVR4nO2aO2gUURSG/9GYID4goIjEGGyCViLRImhhCrEw2ggBFS0ttRFSamlhEzuRIChYWPlIRBQkiaBYWKmFGEVFBY0iGDSSiJ/FnCTLZnazk5k7N6v3gzCPe86Zs//A/pvLkQKBQCAQCAQC/ydRtUWgVdIpSfsktUpqLKKpHJiU9E7SoKRzURS9rxRYUQBgv6Srkj5LuiLppRWuBxoltUs6KmmNpMNRFA3UnA1sB34BF4F6eetzABqBfmAC6EiTOALcB5Y47K8QgCXAMDBca0IbMXsc91YYwF7gD7CxfC3pDXfZcdRtW4XyUvH3XVf5QpIAK+z4COh22VUR2Gd4aJcry9eTBBiz4w1Jt4DLwJzExQ6wHOiTdFPSiN0eq5Iyk9gDYOcHgS/Aa2CXu3bzBdgBvAC+AUfsHkBPLckzAtj1OmAAmALOAssc9p4JoAHoBSaBe8CGkrWFCWD3IuA48AN4DLQ76D8TwCbggXl+b7mFZxKgZG0L8AT4CZwEqv6ULgrgGDAOPAW2VojJLoCtNwBngN/AHWB9ht4zAawFrpvH9wFNVWLzEaAkrhMYBT4BB1L2nhn7cfMBeAvsriE+XwEsdjVwwYoXYpfT9mZv/RrQXGNe/gKU5BRil0n2liLXnQCW58wuq9lbihpuBbDc3O1yPntLUce9ACU1crHLWuwtRa3iBLA6C7bLNPaWomaxApTUS2WXae0tRR9+BLCa89rlQu0tRQ/+BCipnWiXWewtxbP9C2D1W4C7Zpen7W/K7rU4fO7iEMCeEQEnzNom7NzpP1aVBGhw+dBKRFGEpPPAoF2/8tGH5EmAaXx+8Gnqft8/K0EA3w34JgjguwHfBAF8N+CbIIDvBnwTBPDdgG+SBBiXpKRNi3oFWGWn38vXkgR4bsdOZx0Vz05JSHpWUzTxUNEQ/8aQ1FLibfWhNEkdtlHRn8eOrC+AJuAS8fb8tqSYaoOS3YoHJb8qHpR8ofoalNyseFCyWdKhKIpuJwXONyrbotlR2TbV16jsG82Oyn70204gEAgEAoFAYPHxF2vF0ldKM28FAAAAAElFTkSuQmCC" />
+
+  <div class="message-box">
+      <p>{{message}}</p>
+      <p class="token">{{token}}</p>
+  </div>
+
+  <p class="disclaimer">If you did not request this, please ignore this email.</p>
+</body>
+</html>
