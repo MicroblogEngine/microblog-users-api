@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { NextRequest } from 'next/server';
+
 import { POST } from './route';
 import { prisma } from '@/helpers/prisma';
 import { validPassword } from '@/helpers/password';
-import { NextRequest } from 'next/server';
 
 // Mock dependencies
 vi.mock('@/helpers/prisma', () => ({
@@ -32,7 +33,8 @@ describe('Login API Route', () => {
     hash: 'hashedpassword',
     salt: 'salt123',
     email: 'test@example.com',
-    emailVerified: new Date()
+    emailVerified: new Date(),
+    roleId: 'role1'
   };
 
   beforeEach(() => {
@@ -56,17 +58,23 @@ describe('Login API Route', () => {
 
     const response = await POST(request);
     const data = await response.json();
-    data.user.emailVerified = new Date(data.user.emailVerified);
-    
     // Assertions
     expect(response.status).toBe(200);
     expect(data).toEqual({
-      user: mockUser,
+      user: {
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        username: 'testuser',
+        email: 'test@example.com',
+        emailVerified: mockUser.emailVerified.toISOString(),
+      },
       token: 'mock.jwt.token'
     });
 
     // Verify mocks were called correctly
     expect(prisma.user.findFirst).toHaveBeenCalledWith({
+      "include":  {
+        "role": true,
+      },
       where: { username: 'testuser' }
     });
     expect(validPassword).toHaveBeenCalledWith('correctpassword', mockUser.hash, mockUser.salt);
@@ -86,7 +94,7 @@ describe('Login API Route', () => {
 
     const response = await POST(request);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(404);
     expect(validPassword).not.toHaveBeenCalled();
   });
 

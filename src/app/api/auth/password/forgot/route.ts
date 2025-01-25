@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
 
 import { ForgotPasswordFormSchema } from "@ararog/microblog-validation";
 import { prisma } from "@/helpers/prisma";
@@ -9,15 +8,12 @@ import { generateToken } from "@/helpers/token";
 export const POST = async (req: NextRequest) => {
   const forgotPasswordPayload = await req.json();
 
-  try {
-    ForgotPasswordFormSchema.parse(forgotPasswordPayload);
-  }
-  catch(e) {
-    if (e instanceof ZodError) {
-      return new NextResponse(JSON.stringify({ errors: e.formErrors.fieldErrors }), {
-        status: 400,
-      });  
-    }
+  
+  const {success, error} =  ForgotPasswordFormSchema.safeParse(forgotPasswordPayload);
+  if (!success) {
+    return new NextResponse(JSON.stringify({ errors: error?.formErrors.fieldErrors }), {
+      status: 400,
+    });  
   }
 
   const user = await prisma.user.findFirst({
@@ -27,7 +23,7 @@ export const POST = async (req: NextRequest) => {
   });
 
   if (!user) {
-    return new NextResponse(JSON.stringify({ errors: { email: ["User not found"] } }), {
+    return new NextResponse(JSON.stringify({ errors: { user: ["User not found"] } }), {
       status: 404,
     });
   }

@@ -21,8 +21,10 @@
     "paths": {
       "@/*": [ "./src/app/*" ], 
       "@/api/*": [ "./src/app/api/*" ],
+      "@/enums/*": [ "./src/app/enums/*" ],
       "@/helpers/*": [ "./src/app/helpers/*" ],
-      "@/models/*": [ "./src/app/models/*" ]
+      "@/models/*": [ "./src/app/models/*" ],
+      "@/services/*": [ "./src/app/services/*" ]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "server.js"],

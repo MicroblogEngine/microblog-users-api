@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
 
 import { prisma } from "@/helpers/prisma";
 import { VerifyPasswordFormSchema } from "@ararog/microblog-validation";
@@ -8,15 +7,11 @@ export async function POST(req: NextRequest) {
 
   const verificationPayload = await req.json();
 
-  try {
-    VerifyPasswordFormSchema.parse(verificationPayload);
-  }
-  catch(e) {
-    if (e instanceof ZodError) {
-      return new NextResponse(JSON.stringify({ errors: e.formErrors.fieldErrors }), {
-        status: 400,
-      });  
-    }
+  const {success, error } = VerifyPasswordFormSchema.safeParse(verificationPayload);
+  if (!success) {
+    return new NextResponse(JSON.stringify({ errors: error?.formErrors.fieldErrors }), {
+      status: 400,
+    });  
   }
 
   const verification_token = await prisma.verificationToken.findFirst({ 
