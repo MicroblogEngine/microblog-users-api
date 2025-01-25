@@ -49,7 +49,12 @@ export async function POST(req: NextRequest) {
     .sign(new TextEncoder().encode(secret))        
 
   const response: LoginResponse = {
-    user: user,
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      emailVerified: user.emailVerified,
+    },
     token
   };
 

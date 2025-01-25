@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@ararog/microblog-next": "^0.0.3",
-    "@ararog/microblog-types": "^0.0.9",
-    "@ararog/microblog-validation": "^0.0.5",
+    "@ararog/microblog-types": "^0.0.11",
+    "@ararog/microblog-validation": "^0.0.7",
     "@auth/prisma-adapter": "^2.7.4",
     "@opentelemetry/api-logs": "^0.57.1",
     "@opentelemetry/instrumentation": "^0.57.1",
