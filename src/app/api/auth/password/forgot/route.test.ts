@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { POST } from './route';
 import { prisma } from '@/helpers/prisma';
-import sendMail from '@/services/mail';
+import sendMail from '@/services/mail_service';
 import { generateToken } from '@/helpers/token';
 import { NextRequest } from 'next/server';
 

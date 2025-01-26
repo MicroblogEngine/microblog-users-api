@@ -1,16 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ErrorMessages } from "@ararog/microblog-server";
 
-import sendMail from "@/services/mail";
-import { generateToken } from "@/helpers/token";
+import { sendVerificationMail } from "@/services/mail";
+import { prisma } from "@/helpers/prisma";
 
 export const POST = async (req: NextRequest) => {
-  const { email } = await req.json();
+  const { userId } = await req.json();
 
-  const token = generateToken(8);
+  if (!userId) {
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.invalidId] } }), {
+      status: 400,
+    });
+  }
 
-  const content = {title: "E-mail Verification", message: "Please enter the following code to verify your e-mail:", token};
+  const user = await prisma.user.findFirst({ 
+    where: {
+      id: userId
+    }
+  });
 
-  await sendMail(email, "E-mail Verification", content, "/app/templates/email-verify.html");
+  if (!user) {
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.notFound] } }), {
+      status: 404,
+    });
+  }
+
+  await sendVerificationMail(user);
 
   return new NextResponse(null, {
     status: 200,

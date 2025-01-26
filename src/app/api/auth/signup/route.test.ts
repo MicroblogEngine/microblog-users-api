@@ -7,7 +7,7 @@ import { prisma } from '@/helpers/prisma'
 import { SignupFormSchema } from '@ararog/microblog-validation'
 import { generatePassword } from '@/helpers/password'
 import { generateToken } from '@/helpers/token'
-import sendMail from '@/services/mail'
+import sendMail from '@/services/mail_service'
 
 // Mock all dependencies
 vi.mock('@/helpers/prisma', () => ({

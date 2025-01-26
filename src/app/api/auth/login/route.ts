@@ -1,25 +1,22 @@
+import { NextRequest, NextResponse } from "next/server";
+import { LoginFormSchema } from "@ararog/microblog-validation";
+import { ErrorMessages } from "@ararog/microblog-server";
+
+import { generateJWT } from "@/helpers/jwt";
 import { validPassword } from "@/helpers/password";
 import { prisma } from "@/helpers/prisma";
 import { LoginResponse } from "@/models/users";
-import { LoginFormSchema } from "@ararog/microblog-validation";
 import { User } from "@prisma/client";
-import * as jose from "jose";
-import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
+import { sendVerificationMail } from "@/services/mail";
 
 export async function POST(req: NextRequest) {
-
   const credentialsPayload = await req.json();
 
-  try {
-    LoginFormSchema.parse(credentialsPayload);
-  }
-  catch(e) {
-    if (e instanceof ZodError) {
-      return new NextResponse(JSON.stringify({ errors: e.formErrors.fieldErrors }), {
-        status: 400,
-      });  
-    }
+  const {success, data, error} = LoginFormSchema.safeParse(credentialsPayload);
+  if (!success) {
+    return new NextResponse(JSON.stringify({ errors: error.formErrors.fieldErrors }), {
+      status: 400,
+    });  
   }
 
   const user = await prisma.user.findFirst({ 
@@ -27,36 +24,47 @@ export async function POST(req: NextRequest) {
       role: true,
     },
     where: {
-      username: credentialsPayload.username 
+      username: data.username
     }
   });
 
   const secret = process.env.AUTH_SECRET;
   if (!secret) {
-    return new NextResponse(JSON.stringify({ errors: { secret: ["Secret not found"] } }), {
+    console.error(ErrorMessages.secret.notFound);
+    return new NextResponse(JSON.stringify({ errors: { secret: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
   }
 
   if (!user) {
-    return new NextResponse(JSON.stringify({ errors: { user: ["User not found"] } }), {
+    console.error(ErrorMessages.user.notFound);
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.invalidUsernameOrPassword] } }), {
       status: 404,
     });  
   }
 
-  const isValidPassword = validPassword(credentialsPayload.password, 
-    user.hash, user.salt);
-    
-  if(!isValidPassword) {
-    return new NextResponse(JSON.stringify({ errors: { token: ["Invalid password"] } }), {
+  if (! user.emailVerified) {
+    await sendVerificationMail(user);
+    return new NextResponse(JSON.stringify({ 
+      errors: { user: [ErrorMessages.user.emailNotVerified] },
+      user: {
+        id: user.id,
+      }
+    }), {
       status: 401,
     });  
   }
 
-  const token = await new jose.SignJWT({ id: user.id, role: user.role?.name })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setExpirationTime('2w')
-    .sign(new TextEncoder().encode(secret))        
+  const isValidPassword = validPassword(data.password, 
+    user.hash, user.salt);
+    
+  if(!isValidPassword) {
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.invalidUsernameOrPassword] } }), {
+      status: 401,
+    });  
+  }
+
+  const token = await generateJWT({ id: user.id, role: user.role!.name }, secret);
 
   const partialUser: Partial<User> = {
     id: user.id,

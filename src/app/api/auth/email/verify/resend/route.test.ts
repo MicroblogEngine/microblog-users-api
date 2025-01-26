@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
 import { POST } from './route';
-import sendMail from '@/services/mail';
+import sendMail from '@/services/mail_service';
 import { generateToken } from '@/helpers/token';
 
 // Mock dependencies
