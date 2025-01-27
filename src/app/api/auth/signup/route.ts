@@ -1,5 +1,6 @@
 import { SignupFormSchema } from "@ararog/microblog-validation";
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/helpers/pino";
 
 import { generatePassword } from "@/helpers/password";
 import { prisma } from "@/helpers/prisma";
@@ -8,10 +9,12 @@ import { generateJWT } from "@/helpers/jwt";
 import { ErrorMessages } from "@ararog/microblog-server";
 import { sendVerificationMail } from "@/services/mail";
 
+const log = logger.child({
+  route: "signup"
+});
+
 export async function POST(req: NextRequest) {
   const signupPayload = await req.json();
-
-  signupPayload.birthDate = new Date(signupPayload.birthDate);
 
   const {success, data, error} = SignupFormSchema.safeParse(signupPayload);
   if (!success) {
@@ -26,7 +29,7 @@ export async function POST(req: NextRequest) {
   const role = (globalThis as any).roles.user;
 
   if (!role) {
-    console.error(ErrorMessages.role.notFound);
+    log.error(ErrorMessages.role.notFound);
     return new NextResponse(JSON.stringify({ errors: { role: [ErrorMessages.role.notFound] } }), {
       status: 404,
     });
@@ -43,7 +46,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!user) {
-    console.error(ErrorMessages.user.couldNotCreate);
+    log.error(ErrorMessages.user.couldNotCreate);
     return new NextResponse(JSON.stringify({ errors: { generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
@@ -51,7 +54,7 @@ export async function POST(req: NextRequest) {
 
   const secret = process.env.AUTH_SECRET;
   if (!secret) {
-    console.error(ErrorMessages.secret.notFound);
+    log.error(ErrorMessages.secret.notFound);
     return new NextResponse(JSON.stringify({ errors: { generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
@@ -65,7 +68,7 @@ export async function POST(req: NextRequest) {
   }, jwtToken);
 
   if (!profileCreated) {
-    console.error(ErrorMessages.profile.couldNotCreate);
+    log.error(ErrorMessages.profile.couldNotCreate);
     return new NextResponse(JSON.stringify({ errors: {generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });  

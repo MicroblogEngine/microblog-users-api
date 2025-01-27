@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LoginFormSchema } from "@ararog/microblog-validation";
 import { ErrorMessages } from "@ararog/microblog-server";
+import { logger } from "@/helpers/pino";
 
 import { generateJWT } from "@/helpers/jwt";
 import { validPassword } from "@/helpers/password";
@@ -8,6 +9,11 @@ import { prisma } from "@/helpers/prisma";
 import { LoginResponse } from "@/models/users";
 import { User } from "@prisma/client";
 import { sendVerificationMail } from "@/services/mail";
+import { getProfile } from "@/services/profile";
+
+const log = logger.child({
+  route: "login"
+});
 
 export async function POST(req: NextRequest) {
   const credentialsPayload = await req.json();
@@ -30,14 +36,14 @@ export async function POST(req: NextRequest) {
 
   const secret = process.env.AUTH_SECRET;
   if (!secret) {
-    console.error(ErrorMessages.secret.notFound);
+    log.error(ErrorMessages.secret.notFound);
     return new NextResponse(JSON.stringify({ errors: { secret: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
   }
 
   if (!user) {
-    console.error(ErrorMessages.user.notFound);
+    log.error(ErrorMessages.user.notFound);
     return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.invalidUsernameOrPassword] } }), {
       status: 404,
     });  
@@ -73,8 +79,18 @@ export async function POST(req: NextRequest) {
     emailVerified: user.emailVerified,
   };
 
+  const profile = await getProfile(token);
+
+  if (!profile) {
+    log.error(ErrorMessages.profile.notFound);
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.profile.notFound] } }), {
+      status: 404,
+    });  
+  }
+
   const response: LoginResponse = {
     user: partialUser,
+    profile,
     token
   };
 

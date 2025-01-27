@@ -1,15 +1,21 @@
 import { ResetPasswordFormSchema } from "@ararog/microblog-validation";
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/helpers/pino";
 
 import { prisma } from "@/helpers/prisma";
 import { generatePassword } from "@/helpers/password";
 import { ErrorMessages } from "@ararog/microblog-server";
+
+const log = logger.child({
+  route: "resetPassword"
+});
 
 export const POST = async (req: NextRequest) => {
   const resetPasswordPayload = await req.json();
   
   const {success, data, error} = ResetPasswordFormSchema.safeParse(resetPasswordPayload);
   if (!success) {
+    log.warn("Invalid reset password payload");
     return new NextResponse(JSON.stringify({ errors: error?.formErrors.fieldErrors }), {
       status: 400,
     });  
@@ -22,6 +28,7 @@ export const POST = async (req: NextRequest) => {
   });
 
   if (!user) {
+    log.warn("User not found");
     return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.notFound] } }), {
       status: 404,
     });
@@ -35,12 +42,14 @@ export const POST = async (req: NextRequest) => {
   });
 
   if(!verification_token) {
+    log.warn("Invalid token");
     return new NextResponse(JSON.stringify({ errors: { token: [ErrorMessages.token.invalid] } }), {
       status: 401,
     });
   }
 
   if (verification_token.expires && verification_token.expires < new Date()) {
+    log.warn("Token expired");
     return new NextResponse(JSON.stringify({ errors: { token: [ErrorMessages.token.expired] } }), {
       status: 401,
     });

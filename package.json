@@ -15,7 +15,7 @@
     "@ararog/microblog-next": "^0.0.4",
     "@ararog/microblog-server": "^0.0.4",
     "@ararog/microblog-types": "^0.0.19",
-    "@ararog/microblog-validation": "^0.0.12",
+    "@ararog/microblog-validation": "^0.0.13",
     "@auth/prisma-adapter": "^2.7.4",
     "@opentelemetry/api-logs": "^0.57.1",
     "@opentelemetry/instrumentation": "^0.57.1",
