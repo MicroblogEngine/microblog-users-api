@@ -1,4 +1,4 @@
-import { prisma } from '@/helpers/prisma';
+import { PrismaClient } from "@prisma/client"
 import { registerOTel } from '@vercel/otel'
  
 export function register() {
@@ -7,6 +7,8 @@ export function register() {
 }
 
 async function initDB() {
+  const prisma = new PrismaClient();
+
   const adminRole = await prisma.role.findFirst({
     where: {
       name: 'admin'

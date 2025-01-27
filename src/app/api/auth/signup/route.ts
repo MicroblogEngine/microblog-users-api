@@ -11,6 +11,8 @@ import { sendVerificationMail } from "@/services/mail";
 export async function POST(req: NextRequest) {
   const signupPayload = await req.json();
 
+  signupPayload.birthDate = new Date(signupPayload.birthDate);
+
   const {success, data, error} = SignupFormSchema.safeParse(signupPayload);
   if (!success) {
     return new NextResponse(JSON.stringify({ errors: error?.formErrors.fieldErrors }), {
@@ -71,7 +73,7 @@ export async function POST(req: NextRequest) {
 
   await sendVerificationMail(user);
 
-  return new NextResponse(null, {
+  return new NextResponse(JSON.stringify({ id: user.id }), {
     status: 200,
   });  
 }
