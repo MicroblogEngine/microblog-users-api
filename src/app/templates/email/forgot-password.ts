@@ -2,72 +2,96 @@ export const forgotPasswordTemplate = `<html>
   <head>
     <title>{{title}}</title>
     <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        .message-box {
-            background-color: black;
-            border: 1px solid white;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 500px;
-        }
-        .reset-link {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 1px solid white;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        .reset-link:hover {
-            background-color: white;
-            color: black;
-        }
-        .logo-box {
-          background-color: green;
-        }
-        .logo-box.logo-img {
-          top: 50%;
-          bottom: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .code {
-            font-family: monospace;
-            font-size: 1.2em;
-            letter-spacing: 2px;
-            margin: 20px 0;
-        }
+      body {
+        margin: 0;
+      }
+      p {
+        color: white;
+      }
+      .app-name {
+        color: white;
+        font-size: 24pt;
+        font-weight: bold;
+      }
+      .mail-title {
+        color: white;
+        font-size: 18pt;
+        font-weight: bold;
+      }
+      .container {
+        background-color: black;
+        height: 100vh;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      .container .messagebox {
+        border: 1px solid white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+        width: 400px;
+        max-width: 500px;
+      }
+      .container .token {
+        font-family: monospace;
+        font-size: 24px;
+        letter-spacing: 2px;
+        margin: 20px 0;
+      }
+      .container .disclaimer {
+        color: #888;
+        font-size: 14px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
     </style>
   </head>
   <body>
-    <table align="center">
-      <tr>
+    <div class="container">
+      <table align="center">
+        <tr>
+          <td>
+            <img class="logo-img" width="64" height="64" src="https://i.postimg.cc/6QzXvQpZ/microblog-logo.png" />
+          </td>
         <td>
-          <img class="logo-img" width="64" height="64" src="https://i.postimg.cc/6QzXvQpZ/microblog-logo.png" />
+          <h1 class="app-name">Microblog</h1>
         </td>
-       <td>
-        <h1 style="display: inline-block;">Microblog</h1>
-       </td>
-      </tr>
-    </table>
-    <h2>{{title}}</h2>
-    
-    <img width="48" height="48" src="https://i.postimg.cc/vm7mSMH8/locker.png" />
+        </tr>
+      </table>
 
-    <div class="message-box">
-        <p>{{body}}</p>
-        <div class="code">{{code|default('A1B2C3D4')}}</div>
-        <a href=\"{{url}}\" class="reset-link">Reset password</a>
-        <p>If you did not request this, please ignore this email.</p>
-        <p>This link will expire in 24 hours.</p>
+      <table align="center">
+        <tr>
+          <td align="center">
+            <span class="mail-title">{{title}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">
+            <img width="48" height="48" src="https://i.postimg.cc/vm7mSMH8/locker.png" />
+          </td>
+        </tr>
+      </table>    
+
+      <table class="messagebox">
+        <tr>
+          <td align="center">
+            <p>{{body}}</p>
+            <div class="code">{{code}}</div>
+            <a href=\"{{url}}\" class="reset-link">Reset password</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <p>If you did not request this, please ignore this email.</p>
+            <p>This link will expire in 24 hours.</p>
+          </td>
+        </tr>
+      </table>
     </div>
   </body>
 </html>`;

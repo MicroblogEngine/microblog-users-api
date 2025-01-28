@@ -37,10 +37,11 @@ model Role {
 }
 
 model VerificationToken {
-  userId  String    @unique @db.VarChar(40)
-  token   String    @unique @db.VarChar(8)
+  userId  String    @db.VarChar(40)
+  token   String    @db.VarChar(8)
   expires DateTime?
   user    User      @relation(fields: [userId], references: [id])
 
+  @@unique([userId, token])
   @@map("verification_tokens")
 }
