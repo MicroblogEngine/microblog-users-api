@@ -13,7 +13,7 @@
   "dependencies": {
     "@ararog/microblog-next": "^0.0.6",
     "@ararog/microblog-rpc": "^0.0.5",
-    "@ararog/microblog-server": "^0.0.7",
+    "@ararog/microblog-server": "^0.0.8",
     "@ararog/microblog-types": "^0.0.19",
     "@ararog/microblog-users-api-db": "workspace:*",
     "@ararog/microblog-validation": "^0.0.13",

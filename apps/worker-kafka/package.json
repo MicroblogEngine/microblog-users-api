@@ -9,7 +9,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@ararog/microblog-server": "^0.0.7",
+    "@ararog/microblog-server": "^0.0.8",
     "@ararog/microblog-users-api-db": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@sendgrid/mail": "^8.1.4",
