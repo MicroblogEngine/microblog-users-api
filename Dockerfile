@@ -18,7 +18,7 @@ RUN corepack enable && \
   apt-get update -y && \
   apt-get install -y openssl
 
-RUN yarn global add turbo tsup
+RUN yarn global add turbo tsup typescript
 
 COPY . .
 
