@@ -58,5 +58,7 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static"
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 
+RUN ls -la ./api
+
 CMD ["node", "./api/server.js"]
 
