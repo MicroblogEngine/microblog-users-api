@@ -20,14 +20,12 @@ RUN corepack enable && \
 
 RUN yarn global add turbo tsup
 
-COPY pnpm-lock.yaml .npmrc ./
+COPY . .
 
 RUN pnpm fetch 
 
-COPY . .
-
 RUN pnpm install && \
-  npx turbo build
+  turbo build
 
 FROM builder AS test
 
