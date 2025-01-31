@@ -6,7 +6,7 @@
   },
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "tsup src/index.ts --format cjs --dts"
+    "build": "npx tsup src/index.ts --format cjs --dts"
   },
   "dependencies": {
     "@ararog/microblog-rpc": "^0.0.5",
