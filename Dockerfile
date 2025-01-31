@@ -24,8 +24,8 @@ RUN pnpm fetch
 
 COPY . .
 
-RUN pnpm install && \
-  pnpm run build
+RUN pnpm install
+RUN pnpm run build
 
 FROM builder AS test
 
