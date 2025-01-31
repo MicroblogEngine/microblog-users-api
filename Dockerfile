@@ -23,8 +23,7 @@ RUN pnpm install
 
 # Set the environment to production only for build
 ENV NODE_ENV=production
-RUN pnpm turbo build && \
-  ls -la "${SOURCE_DIR}/apps/api/.next/standalone/apps"
+RUN pnpm turbo build
 
 FROM builder AS test
 ARG SOURCE_DIR
@@ -43,7 +42,6 @@ RUN apt-get update -y && \
   addgroup --system --gid 1001 nodejs && \
   adduser --system --uid 1001 nextjs
 
-COPY --from=builder ["${SOURCE_DIR}/apps/api/public", "./api/public"]
 # Set the correct permission for prerender cache
 
 RUN mkdir -p api/.next worker-kafka worker-grpc && \
@@ -53,10 +51,11 @@ EXPOSE 3000
 ENV PORT=30001
 ENV HOSTNAME="0.0.0.0"
 
+COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/public", "./api/public"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/standalone", "./api"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static", "./api/.next/static"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 
-CMD ["node", "./api/server.js"]
-
+#CMD ["node", "./api/server.js"]
+CMD ["sh"]
