@@ -154,10 +154,6 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin",
         "native": true
-      },
-      {
-        "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -184,8 +180,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n  output        = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String              @id @default(uuid())\n  username      String              @unique @default(\"\") @db.VarChar(30)\n  email         String              @unique @db.VarChar(100)\n  salt          String              @db.VarChar(400)\n  hash          String              @db.VarChar(400)\n  emailVerified DateTime?           @map(\"email_verified\")\n  roleId        String?             @db.VarChar(40)\n  role          Role?               @relation(fields: [roleId], references: [id])\n  tokens        VerificationToken[]\n\n  @@map(\"users\")\n}\n\nmodel Role {\n  id          String @id @default(uuid())\n  name        String @unique @db.VarChar(30)\n  description String @db.VarChar(100)\n  users       User[]\n\n  @@map(\"user_roles\")\n}\n\nmodel VerificationToken {\n  userId  String    @db.VarChar(40)\n  token   String    @db.VarChar(8)\n  expires DateTime?\n  user    User      @relation(fields: [userId], references: [id])\n\n  @@unique([userId, token])\n  @@map(\"verification_tokens\")\n}\n",
-  "inlineSchemaHash": "15f5f59d92b56e1688ecd77c16b8e080bc366e1460c406fcb88cc5b469dfeabb",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String              @id @default(uuid())\n  username      String              @unique @default(\"\") @db.VarChar(30)\n  email         String              @unique @db.VarChar(100)\n  salt          String              @db.VarChar(400)\n  hash          String              @db.VarChar(400)\n  emailVerified DateTime?           @map(\"email_verified\")\n  roleId        String?             @db.VarChar(40)\n  role          Role?               @relation(fields: [roleId], references: [id])\n  tokens        VerificationToken[]\n\n  @@map(\"users\")\n}\n\nmodel Role {\n  id          String @id @default(uuid())\n  name        String @unique @db.VarChar(30)\n  description String @db.VarChar(100)\n  users       User[]\n\n  @@map(\"user_roles\")\n}\n\nmodel VerificationToken {\n  userId  String    @db.VarChar(40)\n  token   String    @db.VarChar(8)\n  expires DateTime?\n  user    User      @relation(fields: [userId], references: [id])\n\n  @@unique([userId, token])\n  @@map(\"verification_tokens\")\n}\n",
+  "inlineSchemaHash": "264062b1a4f6857c0662dc63abdfb4e26130660d2d3cb12767158e1efd3669ad",
   "copyEngine": true
 }
 
@@ -225,10 +221,6 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin.dylib.node");
 path.join(process.cwd(), "generated/client/libquery_engine-darwin.dylib.node")
-
-// file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "generated/client/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/client/schema.prisma")

@@ -6,8 +6,7 @@
   },
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "tsup",
-    "postbuild": "cp -R node_modules dist"
+    "build": "tsup"
   },
   "dependencies": {
     "@ararog/microblog-server": "^0.0.8",
