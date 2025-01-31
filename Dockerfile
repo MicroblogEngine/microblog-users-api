@@ -14,14 +14,17 @@ WORKDIR "$SOURCE_DIR"
 
 ENV NODE_ENV=production
 
-COPY . .
-
 RUN corepack enable && \
   apt-get update -y && \
   apt-get install -y openssl
 
-RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --no-frozen-lockfile && \
-  pnpm install --no-frozen-lockfile && \
+COPY pnpm-lock.yaml .
+
+RUN pnpm fetch 
+
+COPY . .
+
+RUN pnpm install && \
   pnpm run build
 
 FROM builder AS test
