@@ -14,16 +14,9 @@ RUN corepack enable && \
   apt-get install -y openssl
 RUN yarn global add turbo
 COPY . .
-RUN turbo prune api worker-kafka worker-grpc --docker
 
-
-FROM base AS installer
-ARG SOURCE_DIR
-WORKDIR "$SOURCE_DIR"
-COPY --from=builder out/json/ .
-RUN pnpm install 
-COPY --from=builder out/full/ .
-RUN pnpm turbo build
+RUN pnpm install && \
+  pnpm turbo build
 
 
 FROM builder AS test
