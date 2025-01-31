@@ -45,7 +45,7 @@ RUN apt-get update -y && \
 # Set the correct permission for prerender cache
 
 RUN mkdir -p api worker-kafka worker-grpc && \
-  chown nextjs:nodejs api/.next worker-kafka worker-grpc
+  chown nextjs:nodejs api worker-kafka worker-grpc
 
 EXPOSE 3000
 ENV PORT=30001
