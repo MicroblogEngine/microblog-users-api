@@ -6,7 +6,8 @@
   },
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "tsup"
+    "build": "tsup",
+    "postbuild": "cp package.json dist/package.json && cd dist && npm install --only=production"
   },
   "dependencies": {
     "@ararog/microblog-rpc": "^0.0.5",
