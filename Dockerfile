@@ -44,7 +44,7 @@ RUN apt-get update -y && \
 
 # Set the correct permission for prerender cache
 
-RUN mkdir -p api/.next worker-kafka worker-grpc && \
+RUN mkdir -p api worker-kafka worker-grpc && \
   chown nextjs:nodejs api/.next worker-kafka worker-grpc
 
 EXPOSE 3000
@@ -57,5 +57,4 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static"
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 
-#CMD ["node", "./api/server.js"]
-CMD ["sh"]
+CMD ["node", "./api/server.js"]
