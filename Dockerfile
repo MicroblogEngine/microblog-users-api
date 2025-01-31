@@ -18,16 +18,14 @@ RUN corepack enable && \
   apt-get update -y && \
   apt-get install -y openssl
 
-RUN yarn global add turbo
-
 COPY pnpm-lock.yaml .npmrc ./
 
 RUN pnpm fetch 
 
 COPY . .
 
-RUN pnpm install
-RUN pnpm run build
+RUN pnpm install && \
+  npx turbo build
 
 FROM builder AS test
 
