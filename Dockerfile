@@ -24,7 +24,7 @@ RUN pnpm install
 # Set the environment to production only for build
 ENV NODE_ENV=production
 RUN pnpm turbo build && \
-  ls -la "${SOURCE_DIR}/apps/api/.next/standalone"
+  ls -la "${SOURCE_DIR}/apps/api/.next/standalone/apps"
 
 FROM builder AS test
 ARG SOURCE_DIR
