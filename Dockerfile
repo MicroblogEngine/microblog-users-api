@@ -25,7 +25,7 @@ RUN pnpm install
 ENV NODE_ENV=production
 RUN pnpm turbo build
 
-FROM builder AS test
+FROM base AS test
 ARG SOURCE_DIR
 WORKDIR "$SOURCE_DIR"
 #RUN pnpm run test
@@ -54,7 +54,7 @@ ENV HOSTNAME="0.0.0.0"
 
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/public", "./api/public"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/standalone", "./api"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./api/generated/client"]
+COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./api/apps/api/generated/client"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static", "./api/.next/static"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
