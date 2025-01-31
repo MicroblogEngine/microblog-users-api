@@ -1,0 +1,51 @@
+{
+  "name": "microblog-users-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest --run",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@ararog/microblog-next": "^0.0.6",
+    "@ararog/microblog-rpc": "^0.0.5",
+    "@ararog/microblog-server": "^0.0.7",
+    "@ararog/microblog-types": "^0.0.19",
+    "@ararog/microblog-users-api-db": "workspace:*",
+    "@ararog/microblog-validation": "^0.0.13",
+    "@bufbuild/protobuf": "^2.2.3",
+    "@opentelemetry/api-logs": "^0.57.1",
+    "@opentelemetry/instrumentation": "^0.57.1",
+    "@opentelemetry/sdk-logs": "^0.57.1",
+    "@sendgrid/mail": "^8.1.4",
+    "@vercel/otel": "^1.10.0",
+    "apisauce": "3.0.0",
+    "handlebars": "^4.7.8",
+    "jose": "^5.9.6",
+    "kafkajs": "^2.2.4",
+    "next": "15.1.0",
+    "nice-grpc": "^2.1.10",
+    "nice-grpc-common": "^2.0.2",
+    "prom-client": "^15.1.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/handlebars": "^4.1.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.0",
+    "prisma": "^6.1.0",
+    "typescript": "^5",
+    "vitest": "^2.1.8",
+    "vitest-tsconfig-paths": "^3.4.1"
+  }
+}
