@@ -18,7 +18,7 @@ RUN corepack enable && \
   apt-get update -y && \
   apt-get install -y openssl
 
-COPY pnpm-lock.yaml .
+COPY pnpm-lock.yaml .npmrc ./
 
 RUN pnpm fetch 
 
