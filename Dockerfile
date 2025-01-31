@@ -8,15 +8,17 @@ FROM node:${NODE_VERSION}-${DEBIAN_CODENAME} AS base
 FROM base AS builder
 ARG SOURCE_DIR
 WORKDIR "$SOURCE_DIR"
-ENV NODE_ENV=production
+
 RUN corepack enable && \
   apt-get update -y && \
   apt-get install -y openssl
 RUN yarn global add turbo
-COPY . .
 
-RUN pnpm install && \
-  pnpm turbo build
+COPY . .
+RUN pnpm install
+
+ENV NODE_ENV=production
+RUN pnpm turbo build
 
 
 FROM builder AS test
