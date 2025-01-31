@@ -2,7 +2,8 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig({
   entry: ['./src/index.ts'],
-  noExternal: [ /(.*)/ ],
+  //https://github.com/egoist/tsup/issues/619
+  noExternal: [ "@ararog" ],
   splitting: false,
   bundle: true,
   outDir: './dist',

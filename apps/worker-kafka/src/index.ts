@@ -1,6 +1,6 @@
 import { Kafka } from "kafkajs";
 import { Topics, logger } from "@ararog/microblog-server";
-import { sendResetPasswordMail, sendVerificationMail } from "./services/mail";
+import { sendResetPasswordMail, sendVerificationMail } from "@/services/mail";
 
 const log = logger.child({
   worker: "microblog-user-api-worker-kafka"
