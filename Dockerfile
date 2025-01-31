@@ -23,8 +23,8 @@ RUN pnpm install
 
 # Set the environment to production only for build
 ENV NODE_ENV=production
-RUN pnpm turbo build
-
+RUN pnpm turbo build && \
+  ls -la "${SOURCE_DIR}/apps/api/.next/standalone"
 
 FROM builder AS test
 ARG SOURCE_DIR
@@ -57,8 +57,6 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/standal
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static", "./api/.next/static"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
-
-RUN ls -la ./api
 
 CMD ["node", "./api/server.js"]
 
