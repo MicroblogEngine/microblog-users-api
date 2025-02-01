@@ -14,6 +14,7 @@ const startKafka = async () => {
     password: process.env.KAFKA_PASSWORD as string
   } : {};
 
+  console.info('Connecting to Kafka broker at ', process.env.KAFKA_BROKER);
   const kafka = new Kafka({
     clientId: CLIENT_ID,
     brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
@@ -25,12 +26,17 @@ const startKafka = async () => {
   await consumer.subscribe({ topic: Topics.SEND_VERIFICATION_MAIL, fromBeginning: true })
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-      if (topic === Topics.SEND_VERIFICATION_MAIL) {
-        const data = JSON.parse(message.value?.toString() ?? '');
-        await sendVerificationMail(data);
-      } else if (topic === Topics.SEND_RESET_PASSWORD_MAIL) {
-        const data = JSON.parse(message.value?.toString() ?? '');
-        await sendResetPasswordMail(data);
+      console.info('Received message from Kafka ', { topic, partition, message });
+      try {
+        if (topic === Topics.SEND_VERIFICATION_MAIL) {
+          const data = JSON.parse(message.value?.toString() ?? '');
+          await sendVerificationMail(data);
+        } else if (topic === Topics.SEND_RESET_PASSWORD_MAIL) {
+          const data = JSON.parse(message.value?.toString() ?? '');
+          await sendResetPasswordMail(data);
+        }
+      } catch (error) {
+        console.error('Error processing message from Kafka ', { topic, partition, message }, error);
       }
     },
   })
