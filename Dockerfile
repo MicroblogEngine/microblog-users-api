@@ -56,15 +56,7 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/public", "./a
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/standalone", "./api"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static", "./api/.next/static"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./api/apps/api/generated/client"]
-
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/node_modules", "./worker-kafka/node_modules"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/node_modules/.pnpm", "./worker-kafka/node_modules/.pnpm"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./worker-kafka/generated/client"]
-
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/node_modules", "./worker-grpc/node_modules"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/node_modules/.pnpm", "./worker-grpc/node_modules/.pnpm"]
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./worker-grpc/generated/client"]
 
 CMD ["node", "./api/apps/api/server.js"]
