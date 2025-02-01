@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Kafka } from "kafkajs";
 import { Topics } from "@ararog/microblog-server";
 import { sendResetPasswordMail, sendVerificationMail } from "@/services/mail";
@@ -23,7 +24,10 @@ const startKafka = async () => {
   
   const consumer = kafka.consumer({ groupId: GROUP_ID, allowAutoTopicCreation: true })
   await consumer.connect()
-  await consumer.subscribe({ topic: Topics.SEND_VERIFICATION_MAIL, fromBeginning: true })
+  await consumer.subscribe({ topics: [
+    Topics.SEND_VERIFICATION_MAIL, 
+    Topics.SEND_RESET_PASSWORD_MAIL
+  ], fromBeginning: true })
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       console.info('Received message from Kafka ', { topic, partition, message });
@@ -36,7 +40,7 @@ const startKafka = async () => {
           await sendResetPasswordMail(data);
         }
       } catch (error) {
-        console.error('Error processing message from Kafka ', { topic, partition, message }, error);
+        console.error('Error processing message from Kafka: ', error);
       }
     },
   })
