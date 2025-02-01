@@ -19,7 +19,8 @@ RUN yarn global add turbo
 
 COPY . .
 # We need install dev dependencies for turbo build without NODE_ENV=production
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch && \
+  pnpm install
 
 # Set the environment to production only for build
 ENV NODE_ENV=production
@@ -52,14 +53,15 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./generated/client"]
-
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/public", "./api/public"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/standalone", "./api"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static", "./api/.next/static"]
+COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./api/apps/api/generated/client"]
 
+COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./generated/client"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
-
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
+
+ENV SCRIPT_PATH="./api/apps/api/server.js"
 
 CMD ["node ${SCRIPT_PATH}"]
