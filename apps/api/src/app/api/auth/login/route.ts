@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ErrorMessages, logger, Topics } from "@ararog/microblog-server";
+import { ErrorMessages, Topics } from "@ararog/microblog-server";
 import { prisma, User } from "@ararog/microblog-users-api-db";
 import { LoginFormSchema } from "@ararog/microblog-validation";
 
@@ -8,10 +8,6 @@ import { validPassword } from "@/helpers/password";
 import { sendMessageToKafka } from "@/helpers/kafka";
 import { LoginResponse } from "@/models/users";
 import { getProfile } from "@/services/profile";
-
-const log = logger.child({
-  route: "login"
-});
 
 export async function POST(req: NextRequest) {
   const credentialsPayload = await req.json();
@@ -34,14 +30,14 @@ export async function POST(req: NextRequest) {
 
   const secret = process.env.AUTH_SECRET;
   if (!secret) {
-    log.error(ErrorMessages.secret.notFound);
+    console.error(ErrorMessages.secret.notFound);
     return new NextResponse(JSON.stringify({ errors: { secret: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
   }
 
   if (!user) {
-    log.error(ErrorMessages.user.notFound);
+    console.error(ErrorMessages.user.notFound);
     return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.invalidUsernameOrPassword] } }), {
       status: 404,
     });  
@@ -80,7 +76,7 @@ export async function POST(req: NextRequest) {
   const profile = await getProfile(token);
 
   if (!profile) {
-    log.error(ErrorMessages.profile.notFound);
+    console.error(ErrorMessages.profile.notFound);
     return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.profile.notFound] } }), {
       status: 404,
     });  

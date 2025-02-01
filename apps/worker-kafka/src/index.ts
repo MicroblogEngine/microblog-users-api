@@ -1,16 +1,12 @@
 import { Kafka } from "kafkajs";
-import { Topics, logger } from "@ararog/microblog-server";
+import { Topics } from "@ararog/microblog-server";
 import { sendResetPasswordMail, sendVerificationMail } from "@/services/mail";
-
-const log = logger.child({
-  worker: "microblog-user-api-worker-kafka"
-});
 
 const CLIENT_ID = process.env.KAFKA_CLIENT_ID ?? 'microblog';
 const GROUP_ID = process.env.KAFKA_GROUP_ID ?? 'microblog';
 
 const startKafka = async () => {
-  log.info('Starting Kafka consumer');
+  console.info('Starting Kafka consumer');
 
   const sasl = process.env.NODE_ENV === 'production' ? {
     mechanism: 'plain', // scram-sha-256 or scram-sha-512

@@ -3,7 +3,7 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  serverExternalPackages: ['pino', 'pino-pretty'],
+  serverExternalPackages: ['pino'],
   headers: async () => {
     return [
       {

@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@ararog/microblog-users-api-db";
 import { SignupFormSchema } from "@ararog/microblog-validation";
-import { ErrorMessages, Topics, logger } from "@ararog/microblog-server";
+import { ErrorMessages, Topics } from "@ararog/microblog-server";
 
 import { generatePassword } from "@/helpers/password";
 import { createProfile } from "@/services/profile";
 //import { generateJWT } from "@/helpers/jwt";
 import { sendMessageToKafka } from "@/helpers/kafka";
-
-const log = logger.child({
-  route: "signup"
-});
 
 export async function POST(req: NextRequest) {
   const signupPayload = await req.json();
@@ -28,7 +24,7 @@ export async function POST(req: NextRequest) {
   const role = (globalThis as any).roles.user;
 
   if (!role) {
-    log.error(ErrorMessages.role.notFound);
+    console.error(ErrorMessages.role.notFound);
     return new NextResponse(JSON.stringify({ errors: { role: [ErrorMessages.role.notFound] } }), {
       status: 404,
     });
@@ -45,7 +41,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!user) {
-    log.error(ErrorMessages.user.couldNotCreate);
+    console.error(ErrorMessages.user.couldNotCreate);
     return new NextResponse(JSON.stringify({ errors: { generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
@@ -53,7 +49,7 @@ export async function POST(req: NextRequest) {
 
   const secret = process.env.AUTH_SECRET;
   if (!secret) {
-    log.error(ErrorMessages.secret.notFound);
+    console.error(ErrorMessages.secret.notFound);
     return new NextResponse(JSON.stringify({ errors: { generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });
@@ -67,7 +63,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!profileCreated) {
-    log.error(ErrorMessages.profile.couldNotCreate);
+    console.error(ErrorMessages.profile.couldNotCreate);
     return new NextResponse(JSON.stringify({ errors: {generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });  

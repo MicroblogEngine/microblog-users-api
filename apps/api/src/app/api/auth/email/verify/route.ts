@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@ararog/microblog-users-api-db";
-import { ErrorMessages, logger } from "@ararog/microblog-server";
+import { ErrorMessages } from "@ararog/microblog-server";
 import { VerifyPasswordFormSchema } from "@ararog/microblog-validation";
-
-const log = logger.child({
-  route: "verifyEmail"
-});
 
 export async function POST(req: NextRequest) {
 
@@ -25,7 +21,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!user) {
-    log.error(ErrorMessages.user.notFound);
+    console.error(ErrorMessages.user.notFound);
     return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.notFound] } }), {
       status: 404,
     });
@@ -39,14 +35,14 @@ export async function POST(req: NextRequest) {
   });
 
   if(!verification_token) {
-    log.error(ErrorMessages.token.invalid);
+    console.error(ErrorMessages.token.invalid);
     return new NextResponse(JSON.stringify({ errors: { token: [ErrorMessages.token.invalid] } }), {
       status: 401,
     });
   }
 
   if (verification_token.expires && verification_token.expires < new Date()) {
-    log.error(ErrorMessages.token.expired);
+    console.error(ErrorMessages.token.expired);
     return new NextResponse(JSON.stringify({ errors: { token: [ErrorMessages.token.expired] } }), {
       status: 401,
     });

@@ -1,13 +1,8 @@
 import { SignupDetailsForm } from "@ararog/microblog-types"
 import {createChannel, createClient, Metadata} from 'nice-grpc';
-import {logger} from '@ararog/microblog-server';
 
 import {ProfileServiceDefinition, ProfileServiceClient} from '@ararog/microblog-rpc';
 import { Profile } from "@/models/profiles";
-
-const log = logger.child({
-  service: "profile"
-});
 
 export const createProfile = async (userId: string, data: SignupDetailsForm) => {
   
@@ -29,12 +24,12 @@ export const createProfile = async (userId: string, data: SignupDetailsForm) => 
     });
 
     if (! response) {
-      log.error("Failed to create profile");
+      console.error("Failed to create profile");
       return false;
     }
     return true;
   } catch (error) {
-    log.error(error);
+    console.error(error);
     return false;
   } finally {
     channel.close();
@@ -55,7 +50,7 @@ export const getProfile = async (userId: string) : Promise<Profile | undefined> 
     });
 
     if (! response) {
-      log.error("Failed to load profile");
+      console.error("Failed to load profile");
       return undefined;
     }
     return {
@@ -63,7 +58,7 @@ export const getProfile = async (userId: string) : Promise<Profile | undefined> 
       name: response.name,
     };
   } catch (error) {
-    log.error(error);
+    console.error(error);
     return undefined;
   } finally {
     channel.close();

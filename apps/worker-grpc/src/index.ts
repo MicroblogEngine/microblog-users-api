@@ -1,11 +1,7 @@
-import { Topics, logger } from "@ararog/microblog-server";
-
-const log = logger.child({
-  worker: "microblog-user-api-worker-grpc"
-});
+import { Topics } from "@ararog/microblog-server";
 
 const startServer = async () => {
-  log.info('Starting server');
+  console.info('Starting server');
   //
 }
 

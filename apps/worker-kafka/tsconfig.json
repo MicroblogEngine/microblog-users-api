@@ -2,13 +2,12 @@
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "module": "NodeNext",
     "paths": {
       "@/*": [ "./src/*" ], 
       "@/helpers/*": [ "./src/helpers/*" ],
       "@/templates/*": [ "./src/templates/*" ],
       "@/services/*": [ "./src/services/*" ]
-    }
+    },
   },
   "include": ["src", "rollup.config.ts"],
   "exclude": ["node_modules", "dist"]

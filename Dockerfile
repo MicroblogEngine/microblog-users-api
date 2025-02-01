@@ -19,7 +19,7 @@ RUN yarn global add turbo
 
 COPY . .
 # We need install dev dependencies for turbo build without NODE_ENV=production
-RUN pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 
 # Set the environment to production only for build
 ENV NODE_ENV=production
