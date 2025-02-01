@@ -63,4 +63,4 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/gene
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./worker-grpc/generated/client"]
 
-CMD ["node", "./api/apps/api/server.js"]
+CMD ["node", "${ENTRYPOINT}"]
