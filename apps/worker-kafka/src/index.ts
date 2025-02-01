@@ -20,7 +20,7 @@ const startKafka = async () => {
     ...sasl,
   });
   
-  const consumer = kafka.consumer({ groupId: GROUP_ID })
+  const consumer = kafka.consumer({ groupId: GROUP_ID, allowAutoTopicCreation: true })
   await consumer.connect()
   await consumer.subscribe({ topic: Topics.SEND_VERIFICATION_MAIL, fromBeginning: true })
   await consumer.run({

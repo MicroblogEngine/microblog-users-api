@@ -62,6 +62,4 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/gene
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 
-ENV SCRIPT_PATH="./api/apps/api/server.js"
-
 CMD ["node ${SCRIPT_PATH}"]
