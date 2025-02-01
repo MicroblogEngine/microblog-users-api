@@ -49,7 +49,7 @@ RUN mkdir -p api worker-kafka worker-grpc && \
   chown nextjs:nodejs api worker-kafka worker-grpc
 
 EXPOSE 3000
-ENV PORT=30001
+ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/public", "./api/public"]
@@ -63,4 +63,4 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/gene
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client", "./worker-grpc/generated/client"]
 
-CMD ["node", "${ENTRYPOINT}"]
+CMD ["sh", "-c", "node", "${ENTRYPOINT}"]
