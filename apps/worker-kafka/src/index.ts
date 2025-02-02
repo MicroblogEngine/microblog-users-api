@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Kafka } from "kafkajs";
+import { Kafka, SASLMechanism, SASLOptions } from "kafkajs";
 import { Topics } from "@ararog/microblog-server";
 import { sendResetPasswordMail, sendVerificationMail } from "@/services/mail";
 
@@ -9,18 +9,17 @@ const GROUP_ID = process.env.KAFKA_GROUP_ID ?? 'microblog';
 const startKafka = async () => {
   console.info('Starting Kafka consumer');
 
-  const sasl = process.env.NODE_ENV === 'production' ? {
-    protocol: process.env.KAFKA_SASL_PROTOCOL || 'PLAINTEXT',
-    mechanism: process.env.KAFKA_SASL_MECHANISM || 'plain', // scram-sha-256 or scram-sha-512
+  const sasl: SASLOptions | undefined = process.env.NODE_ENV === 'production' ? {
+    mechanism: process.env.KAFKA_SASL_MECHANISM as 'plain',
     username: process.env.KAFKA_USER as string,
-    password: process.env.KAFKA_PASSWORD as string
-  } : {};
+    password: process.env.KAFKA_PASSWORD as string,
+  } : undefined;
 
   console.info('Connecting to Kafka broker at ', process.env.KAFKA_BROKER);
   const kafka = new Kafka({
     clientId: CLIENT_ID,
     brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
-    ...sasl,
+    sasl: sasl,
   });
   
   const consumer = kafka.consumer({ groupId: GROUP_ID, allowAutoTopicCreation: true })
