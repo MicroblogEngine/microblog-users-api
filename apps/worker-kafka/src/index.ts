@@ -10,6 +10,7 @@ const startKafka = async () => {
   console.info('Starting Kafka consumer');
 
   const sasl = process.env.NODE_ENV === 'production' ? {
+    protocol: process.env.KAFKA_SASL_PROTOCOL || 'PLAINTEXT',
     mechanism: process.env.KAFKA_SASL_MECHANISM || 'plain', // scram-sha-256 or scram-sha-512
     username: process.env.KAFKA_USER as string,
     password: process.env.KAFKA_PASSWORD as string
