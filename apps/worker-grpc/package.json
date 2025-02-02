@@ -9,7 +9,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@ararog/microblog-rpc": "^0.0.11",
+    "@ararog/microblog-rpc": "^0.0.12",
     "@ararog/microblog-server": "^0.0.10",
     "@ararog/microblog-users-api-db": "workspace:*",
     "@bufbuild/protobuf": "^2.2.3",

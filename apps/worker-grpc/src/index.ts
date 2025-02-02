@@ -25,7 +25,7 @@ const startServer = async () => {
 
   server.add(UsersServiceDefinition, usersServiceImpl);
 
-  console.log('Server listening on', process.env.GRPC_HOST || '0.0.0.0:8080');
+  console.log('Server listening on ', process.env.GRPC_HOST || '0.0.0.0:8080');
   await server.listen(process.env.GRPC_HOST || '0.0.0.0:8080');
 }
 
