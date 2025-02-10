@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     emailVerified: user.emailVerified,
   };
 
-  const profile = await getProfile(token);
+  const profile = await getProfile(user.id);
 
   if (!profile) {
     console.error(ErrorMessages.profile.notFound);

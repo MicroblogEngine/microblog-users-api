@@ -24,11 +24,11 @@ importers:
         specifier: ^0.0.6
         version: 0.0.6(jose@5.9.6)(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@ararog/microblog-rpc':
-        specifier: ^0.0.5
-        version: 0.0.5
+        specifier: ^0.0.18
+        version: 0.0.18
       '@ararog/microblog-server':
-        specifier: ^0.0.10
-        version: 0.0.10
+        specifier: ^0.0.11
+        version: 0.0.11
       '@ararog/microblog-types':
         specifier: ^0.0.19
         version: 0.0.19
@@ -127,8 +127,8 @@ importers:
   apps/worker-grpc:
     dependencies:
       '@ararog/microblog-rpc':
-        specifier: ^0.0.12
-        version: 0.0.12
+        specifier: ^0.0.19
+        version: 0.0.19
       '@ararog/microblog-server':
         specifier: ^0.0.10
         version: 0.0.10
@@ -141,6 +141,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       nice-grpc:
         specifier: ^2.1.10
         version: 2.1.10
@@ -269,14 +272,17 @@ packages:
       jose: 5.9.6
       next: 15.1.0
 
-  '@ararog/microblog-rpc@0.0.12':
-    resolution: {integrity: sha512-KDbJbL5rhBqFhDdz2jCQ2jhkTsLA7qqOLFhSXZ8hVQjXnTHNkVpZ7uQ2wdYScVPlGez3GwaIXYfBBrrd3gDqCw==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-rpc/0.0.12/3f489a80a366e8d45496e35d2b78ec742527dba9}
+  '@ararog/microblog-rpc@0.0.18':
+    resolution: {integrity: sha512-6TR50RC6WxF0iL3tu6vt5Ej76kmHWYKon+1is0gSxx6w4sAYZ8jxWQJPr0FANRp4MvlMU9H5+gKLgW9znHeObw==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-rpc/0.0.18/88ee2780fd9bdc3f594bfb5aab6031a7f2ac9e92}
 
-  '@ararog/microblog-rpc@0.0.5':
-    resolution: {integrity: sha512-fuceh7FbaP0fXC7S9ttBxGU00/6qwazQngq7/bg2X60lJJ5kZWevIShn00sRIVsV+YvANm0QX/yhF3EcTfaLWg==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-rpc/0.0.5/e21992f46f2cf5ae0504528723bb8357baa0c5c4}
+  '@ararog/microblog-rpc@0.0.19':
+    resolution: {integrity: sha512-VxG038Qwa/vwXuQBiElVCV+kBETrIshWRCebiyiWWcEANAEohpS06NbEhoG3CsaUSbUg2sdcMzxvDbfkgKlVzw==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-rpc/0.0.19/ebf15d3f47954c1302c9ca6bc8486f6015ee4c17}
 
   '@ararog/microblog-server@0.0.10':
     resolution: {integrity: sha512-cF/rhSkSjwEwadrzdFkFtaBePOnIYNN2BNGuDY78HuXTqFOT9UEnUnNHjqNvOJWev6dVUz4RkBqU4M135g41OQ==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-server/0.0.10/6db62d37d6b2c3e8281a4e5bc5094384dd3fffd0}
+
+  '@ararog/microblog-server@0.0.11':
+    resolution: {integrity: sha512-nY8QiFqyk+Mzz3xYKrtRQH2LbksVyEgKBgml1+SAez3J/pxh3MIJ8MCX0lsNGhq2MZQ9xr3zgTo7+4OKzADKgA==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-server/0.0.11/36344e689b022a0e3889e5c1be0cbb77289a9dc2}
 
   '@ararog/microblog-types@0.0.19':
     resolution: {integrity: sha512-x3j8dEEVr6qf1KvOoocUuwl+YsVavwbEIbyW0PDrCOtA/KuUGko5jEIg59gAVcfxjts5Ex9KysOK/QYD0F7qNw==, tarball: https://npm.pkg.github.com/download/@ararog/microblog-types/0.0.19/79949906d641d535b48d1ebf43409dce7d7ec4fc}
@@ -3008,17 +3014,19 @@ snapshots:
       jose: 5.9.6
       next: 15.1.0(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
-  '@ararog/microblog-rpc@0.0.12':
+  '@ararog/microblog-rpc@0.0.18':
     dependencies:
       '@bufbuild/protobuf': 2.2.3
       nice-grpc-common: 2.0.2
 
-  '@ararog/microblog-rpc@0.0.5':
+  '@ararog/microblog-rpc@0.0.19':
     dependencies:
       '@bufbuild/protobuf': 2.2.3
       nice-grpc-common: 2.0.2
 
   '@ararog/microblog-server@0.0.10': {}
+
+  '@ararog/microblog-server@0.0.11': {}
 
   '@ararog/microblog-types@0.0.19': {}
 
@@ -4275,8 +4283,8 @@ snapshots:
       '@typescript-eslint/parser': 8.22.0(eslint@9.19.0)(typescript@5.7.3)
       eslint: 9.19.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@9.19.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.19.0)
+      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0))(eslint@9.19.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.19.0)
       eslint-plugin-react: 7.37.4(eslint@9.19.0)
       eslint-plugin-react-hooks: 5.1.0(eslint@9.19.0)
@@ -4299,7 +4307,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.19.0):
+  eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.0(supports-color@5.5.0)
@@ -4311,22 +4319,22 @@ snapshots:
       is-glob: 4.0.3
       stable-hash: 0.0.4
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.19.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0))(eslint@9.19.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.19.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0))(eslint@9.19.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.22.0(eslint@9.19.0)(typescript@5.7.3)
       eslint: 9.19.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@9.19.0)
+      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.19.0):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0))(eslint@9.19.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -4337,7 +4345,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.19.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.19.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0))(eslint@9.19.0))(eslint@9.19.0)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3

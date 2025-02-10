@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {createServer, CallContext} from 'nice-grpc';
 import { prisma } from "@ararog/microblog-users-api-db";
 import {
@@ -20,12 +21,12 @@ const usersServiceImpl: UsersServiceImplementation = {
 
 
 const startServer = async () => {
-  console.log('Starting server');
+  console.log('Starting gRPC server...');
   const server = createServer();
 
   server.add(UsersServiceDefinition, usersServiceImpl);
 
-  console.log('Server listening on ', process.env.GRPC_HOST || '0.0.0.0:8080');
+  console.log('gRPC server listening on ', process.env.GRPC_HOST || '0.0.0.0:8080');
   await server.listen(process.env.GRPC_HOST || '0.0.0.0:8080');
 }
 

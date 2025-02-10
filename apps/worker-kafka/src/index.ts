@@ -7,7 +7,7 @@ const CLIENT_ID = process.env.KAFKA_CLIENT_ID ?? 'microblog';
 const GROUP_ID = process.env.KAFKA_GROUP_ID ?? 'microblog';
 
 const startKafka = async () => {
-  console.info('Starting Kafka consumer');
+  console.info('Starting Kafka consumer...');
 
   const sasl: SASLOptions | undefined = process.env.NODE_ENV === 'production' ? {
     mechanism: process.env.KAFKA_SASL_MECHANISM as 'plain',
@@ -28,6 +28,9 @@ const startKafka = async () => {
     Topics.SEND_VERIFICATION_MAIL, 
     Topics.SEND_RESET_PASSWORD_MAIL
   ], fromBeginning: true })
+
+  console.info("Kafka consumer connected to broker ", process.env.KAFKA_BROKER)
+
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       console.info('Received message from Kafka ', { topic, partition, message });

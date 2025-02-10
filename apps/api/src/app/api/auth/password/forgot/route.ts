@@ -7,7 +7,6 @@ import { sendMessageToKafka } from "@/helpers/kafka";
 
 export const POST = async (req: NextRequest) => {
   const forgotPasswordPayload = await req.json();
-
   
   const {success, data, error} =  ForgotPasswordFormSchema.safeParse(forgotPasswordPayload);
   if (!success) {

@@ -1,22 +1,21 @@
 import { SignupDetailsForm } from "@ararog/microblog-types"
 import {createChannel, createClient, Metadata} from 'nice-grpc';
 
-import {ProfileServiceDefinition, ProfileServiceClient} from '@ararog/microblog-rpc';
+import {ProfilesServiceClient, ProfilesServiceDefinition} from '@ararog/microblog-rpc';
 import { Profile } from "@/models/profiles";
 
 export const createProfile = async (userId: string, data: SignupDetailsForm) => {
-  
   const channel = createChannel(process.env.PROFILES_RPC_HOST || 'localhost:8080');
   try {
 
-    const client: ProfileServiceClient = createClient(
-      ProfileServiceDefinition,
+    const client: ProfilesServiceClient = createClient(
+      ProfilesServiceDefinition,
       channel,
     );
 
     const response = await client.createProfile({
       name: data.name,
-      dateOfBirth: data.birthDate,
+      birthDate: data.birthDate,
     }, {
       metadata: new Metadata({
         'x-user-id': userId
@@ -40,8 +39,8 @@ export const getProfile = async (userId: string) : Promise<Profile | undefined> 
   const channel = createChannel(process.env.PROFILES_RPC_HOST || 'localhost:8080');
   try {
 
-    const client: ProfileServiceClient  = createClient(
-      ProfileServiceDefinition,
+    const client: ProfilesServiceClient  = createClient(
+      ProfilesServiceDefinition,
       channel,
     );
 
@@ -53,10 +52,7 @@ export const getProfile = async (userId: string) : Promise<Profile | undefined> 
       console.error("Failed to load profile");
       return undefined;
     }
-    return {
-      id: response.id,
-      name: response.name,
-    };
+    return response.profile;
   } catch (error) {
     console.error(error);
     return undefined;

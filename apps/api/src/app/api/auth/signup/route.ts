@@ -30,7 +30,33 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const user = await prisma.user.create({
+  let user = await prisma.user.findFirst({
+    where: {
+      username: data.username
+    }
+  });
+
+  if (user) {
+    console.error(ErrorMessages.user.usernameAlreadyExists);
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.usernameAlreadyExists] } }), {
+      status: 409,
+    });
+  }
+
+  user = await prisma.user.findFirst({
+    where: {
+      username: data.email
+    }
+  });
+
+  if (user) {
+    console.error(ErrorMessages.user.emailAlreadyExists);
+    return new NextResponse(JSON.stringify({ errors: { user: [ErrorMessages.user.emailAlreadyExists] } }), {
+      status: 409,
+    });
+  }
+
+  user = await prisma.user.create({
     data: {
       username: data.username,
       email: data.email,
