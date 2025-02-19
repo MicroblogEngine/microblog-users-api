@@ -30,7 +30,7 @@ FROM base AS test
 ARG SOURCE_DIR
 WORKDIR "$SOURCE_DIR"
 #RUN pnpm run test
-RUN echo "do nothing"
+RUN pnpm run lint
 
 
 FROM base AS runtime
@@ -64,4 +64,4 @@ COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/api/.next/static"
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-kafka/dist", "./worker-kafka"]
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/apps/worker-grpc/dist", "./worker-grpc"]
 
-CMD ["node ${SCRIPT_PATH}"]
+CMD ["node ${ENTRYPOINT}"]

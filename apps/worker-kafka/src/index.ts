@@ -30,7 +30,6 @@ const startKafka = async () => {
   ], fromBeginning: true })
 
   console.info("Kafka consumer connected to broker ", process.env.KAFKA_BROKER)
-
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       console.info('Received message from Kafka ', { topic, partition, message });

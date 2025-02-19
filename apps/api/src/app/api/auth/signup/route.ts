@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(JSON.stringify({ errors: {generic: [ErrorMessages.generic.internalServerError] } }), {
       status: 500,
     });  
-  }    
+  }
 
   await sendMessageToKafka(Topics.SEND_VERIFICATION_MAIL, user);
 
