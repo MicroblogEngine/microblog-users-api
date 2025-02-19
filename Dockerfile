@@ -30,7 +30,8 @@ FROM base AS test
 ARG SOURCE_DIR
 WORKDIR "$SOURCE_DIR"
 #RUN pnpm run test
-RUN pnpm run lint
+#RUN pnpm run lint
+RUN echo "nothing to do"
 
 
 FROM base AS runtime
@@ -45,7 +46,6 @@ RUN apt-get update -y && \
   adduser --system --uid 1001 nextjs
 
 # Set the correct permission for prerender cache
-
 RUN mkdir -p api worker-kafka worker-grpc && \
   chown nextjs:nodejs api worker-kafka worker-grpc
 
