@@ -53,7 +53,7 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-ENV PRISMA_QUERY_ENGINE_BINARY "${SOURCE_DIR}/libquery_engine-debian-openssl-3.0.x.so.node"
+ENV PRISMA_QUERY_ENGINE_LIBRARY "${SOURCE_DIR}/libquery_engine-debian-openssl-3.0.x.so.node"
 
 COPY --from=builder --chown=nextjs:nodejs ["${SOURCE_DIR}/packages/database/generated/client/libquery_engine-debian-openssl-3.0.x.so.node", "."]
 

@@ -14,7 +14,7 @@
     "@ararog/microblog-next": "^0.0.6",
     "@ararog/microblog-rpc": "^0.0.18",
     "@ararog/microblog-server": "^0.0.11",
-    "@ararog/microblog-types": "^0.0.19",
+    "@ararog/microblog-types": "^0.0.22",
     "@ararog/microblog-users-api-db": "workspace:*",
     "@ararog/microblog-validation": "^0.0.13",
     "@bufbuild/protobuf": "^2.2.3",
