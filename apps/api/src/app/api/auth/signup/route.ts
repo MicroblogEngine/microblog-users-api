@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
 
   const profileCreated = await createProfile(user.id, {
     name: data.name,
-    birthDate: data.birthDate.toISOString()
+    birthDate: data.birthDate
   });
 
   if (!profileCreated) {

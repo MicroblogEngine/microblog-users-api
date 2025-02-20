@@ -15,7 +15,7 @@ export const createProfile = async (userId: string, data: SignupDetailsForm) => 
 
     const response = await client.createProfile({
       name: data.name,
-      birthDate: data.birthDate,
+      birthDate: data.birthDate.toISOString(),
     }, {
       metadata: new Metadata({
         'x-user-id': userId
