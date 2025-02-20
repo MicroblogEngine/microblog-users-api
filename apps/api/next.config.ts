@@ -3,7 +3,6 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  serverExternalPackages: ['pino'],
   headers: async () => {
     return [
       {
@@ -27,8 +26,6 @@ const nextConfig: NextConfig = {
   },
   webpack: (config, {}) => {
     config.resolve.alias["@"] = path.join(__dirname, "src", "app");
-    // NOTE: This is a workaround to avoid nextjs build error
-    config.externals.push({ pino: 'commonjs pino' });
     return config;
   },
 };

@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Kafka, SASLMechanism, SASLOptions } from "kafkajs";
+import { Kafka, SASLOptions } from "kafkajs";
 import { Topics } from "@ararog/microblog-server";
 import { sendResetPasswordMail, sendVerificationMail } from "@/services/mail";
 

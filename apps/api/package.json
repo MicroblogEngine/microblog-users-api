@@ -21,10 +21,8 @@
     "@opentelemetry/api-logs": "^0.57.1",
     "@opentelemetry/instrumentation": "^0.57.1",
     "@opentelemetry/sdk-logs": "^0.57.1",
-    "@sendgrid/mail": "^8.1.4",
     "@vercel/otel": "^1.10.0",
     "apisauce": "3.0.0",
-    "handlebars": "^4.7.8",
     "jose": "^5.9.6",
     "kafkajs": "^2.2.4",
     "next": "15.1.0",
@@ -37,7 +35,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@types/handlebars": "^4.1.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
