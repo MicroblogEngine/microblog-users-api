@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Kafka, SASLOptions } from "kafkajs";
+import { Kafka, logLevel, SASLOptions } from "kafkajs";
 import { Topics } from "@ararog/microblog-server";
 import { sendResetPasswordMail, sendVerificationMail } from "@/services/mail";
 
@@ -25,7 +25,7 @@ const startKafka = async () => {
   const consumer = kafka.consumer({ groupId: GROUP_ID, allowAutoTopicCreation: true })
   await consumer.connect()
   await consumer.subscribe({ topics: [
-    Topics.SEND_VERIFICATION_MAIL, 
+    Topics.SEND_VERIFICATION_MAIL,
     Topics.SEND_RESET_PASSWORD_MAIL
   ], fromBeginning: true })
 

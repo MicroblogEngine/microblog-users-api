@@ -11,7 +11,6 @@ String infraBranch = "main"
 dockerPipeline([
   dockerRepository: dockerRepository,
   dockerRegistry: dockerRegistry,
-  createEnv: true,
   platform: "linux/amd64",
   infra: [
       job: "${infraJob}/${infraBranch}"
