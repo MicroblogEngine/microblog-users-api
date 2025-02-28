@@ -15,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id            String              @id @default(uuid())
+  id            String              @id @default(uuid(7))
   username      String              @unique @default("") @db.VarChar(30)
   email         String              @unique @db.VarChar(100)
   salt          String              @db.VarChar(400)
